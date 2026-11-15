@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تحميل الملفات بالتسلسل</title>
+</head>
+<body>
+
+    <h2>اضغط على الزر لتحميل الملفات بالترتيب</h2>
+    
+    <!-- الزر الذي سيقوم بالتحميل -->
+    <button id="downloadBtn">تحميل الملف التالي</button>
+
+    <script>
+        // قائمة روابط الملفات الخاصة بك
+        const files = [
+            "https://example.com/file1.zip",
+            "https://example.com/file2.pdf",
+            "https://example.com/file3.docx"
+        ];
+
+        let currentIndex = 0; // مؤشر لتتبع الملف الحالي
+        const btn = document.getElementById('downloadBtn');
+
+        btn.addEventListener('click', function() {
+            if (currentIndex < files.length) {
+                // إنشاء رابط مخفي والضغط عليه برمجياً
+                const link = document.createElement('a');
+                link.href = files[currentIndex];
+                link.download = ''; // هذا يجبر المتصفح على التحميل بدلاً من الفتح
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                // الانتقال للملف التالي
+                currentIndex++;
+
+                // تحديث نص الزر أو تعطيله عند انتهاء الملفات
+                if (currentIndex === files.length) {
+                    btn.textContent = "تم تحميل جميع الملفات";
+                    btn.disabled = true;
+                } else {
+                    btn.textContent = "تحميل الملف رقم " + (currentIndex + 1);
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
